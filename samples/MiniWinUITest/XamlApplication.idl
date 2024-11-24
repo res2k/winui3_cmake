@@ -1,0 +1,8 @@
+namespace MiniWinUITest
+{
+	[default_interface]
+	runtimeclass XamlApplication : Microsoft.UI.Xaml.Application, Microsoft.UI.Xaml.Markup.IXamlMetadataProvider
+	{
+		Windows.Foundation.Collections.IVector<Microsoft.UI.Xaml.Markup.IXamlMetadataProvider> Providers{get; };
+	}
+}
