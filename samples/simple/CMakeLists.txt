@@ -10,8 +10,9 @@ include(winmd_from_idl)
 set(ROOT_NAMESPACE "winui3_cmake_simple") # must match XAML class namespaces etc.
 
 # Arguments that are shared by multiple functions
+set(WINSDK_VERSION 10.0.17763.0)
 set(common_args
-    WINSDK_VERSION 10.0.17763.0
+    WINSDK_VERSION ${WINSDK_VERSION}
     NAMESPACE "winui3_cmake_simple"
     PCH "pch.h")
 
@@ -78,6 +79,7 @@ target_sources(simple PRIVATE
                "${Microsoft_WindowsAppSDK_PATH}/include/MddBootstrapAutoInitializer.cpp"
                )
 target_compile_definitions(simple PRIVATE UNICODE _UNICODE)
+set_target_properties(simple PROPERTIES VS_WINDOWS_TARGET_PLATFORM_MIN_VERSION ${WINSDK_VERSION})
 set_source_files_properties("App.xaml" PROPERTIES VS_XAML_TYPE ApplicationDefinition)
 target_include_directories(simple PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
 target_include_directories(simple PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
