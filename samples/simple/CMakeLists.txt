@@ -61,15 +61,8 @@ run_cppwinrt(TARGET simple_generate_cppwinrt
              GENERATED_SOURCES cppwinrt_generated
              ${common_args})
 
-set(pri_file "${CMAKE_CURRENT_BINARY_DIR}/resources.pri")
-make_pri(OUTPUT "${pri_file}"
-         DIRECTORY "${xbf_dir}"
-         FILES "${xbf_files}")
-add_custom_target(simple_pri DEPENDS "${pri_file}")
-
 add_executable(simple WIN32)
 add_dependencies(simple simple_generate_winappsdk)
-add_dependencies(simple simple_pri)
 target_sources(simple PRIVATE
                "app.manifest"
                "App.xaml"
@@ -93,6 +86,12 @@ target_precompile_headers(simple PRIVATE pch.h)
 add_custom_command(TARGET simple
                    POST_BUILD
                    COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${Microsoft_WindowsAppSDK_PATH}/runtimes/win-x64/native/Microsoft.WindowsAppRuntime.Bootstrap.dll" "$<TARGET_FILE_DIR:simple>")
+
+set(pri_file "${CMAKE_CURRENT_BINARY_DIR}/resources.pri")
+make_pri_postbuild(simple
+                   OUTPUT "${pri_file}"
+                   DIRECTORY "${xbf_dir}"
+                   FILES "${xbf_files}")
 add_custom_command(TARGET simple
                    POST_BUILD
                    COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${pri_file}" "$<TARGET_FILE_DIR:simple>/simple.pri")
