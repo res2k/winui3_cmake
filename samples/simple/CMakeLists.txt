@@ -5,6 +5,7 @@ include(make_pri)
 include(merge_winmds)
 include(run_cppwinrt)
 include(target_xaml_compile)
+include(target_xaml_sources)
 include(winmd_from_idl)
 
 set(ROOT_NAMESPACE "winui3_cmake_simple") # must match XAML class namespaces etc.
@@ -56,20 +57,15 @@ add_dependencies(simple simple_generate_winappsdk)
 add_dependencies(simple simple_merge_winmds) # Avoids a warning in XAML compilation
 target_sources(simple PRIVATE
                "app.manifest"
-               "App.xaml"
-               "App.xaml.cpp"
-               "App.xaml.h"
-               "MainWindow.xaml"
-               "MainWindow.xaml.cpp"
-               "MainWindow.xaml.h"
                "${cppwinrt_generated}"
                "${XamlMetaDataProvider_CPP}"
 
                "${Microsoft_WindowsAppSDK_PATH}/include/MddBootstrapAutoInitializer.cpp"
                )
+target_xaml_sources(simple PRIVATE "App.xaml" VS_XAML_TYPE ApplicationDefinition)
+target_xaml_sources(simple PRIVATE "MainWindow.xaml")
 target_compile_definitions(simple PRIVATE UNICODE _UNICODE)
 set_target_properties(simple PROPERTIES VS_WINDOWS_TARGET_PLATFORM_MIN_VERSION ${WINSDK_VERSION})
-set_source_files_properties("App.xaml" PROPERTIES VS_XAML_TYPE ApplicationDefinition)
 target_include_directories(simple PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
 target_include_directories(simple PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(simple PRIVATE "${Microsoft_Windows_ImplementationLibrary_PATH}/include")
