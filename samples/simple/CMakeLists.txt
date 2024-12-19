@@ -77,6 +77,7 @@ target_sources(simple PRIVATE
 
                "${Microsoft_WindowsAppSDK_PATH}/include/MddBootstrapAutoInitializer.cpp"
                )
+target_compile_definitions(simple PRIVATE UNICODE _UNICODE)
 set_source_files_properties("App.xaml" PROPERTIES VS_XAML_TYPE ApplicationDefinition)
 target_include_directories(simple PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
 target_include_directories(simple PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
