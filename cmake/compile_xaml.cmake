@@ -6,6 +6,7 @@ include(json)
 include(require_arguments)
 check_nuget_package(Microsoft.WindowsAppSDK REQUIRED)
 
+# Helper: Create JSON representation of MSBuild Item
 function(make_msbuild_item JSON)
     cmake_parse_arguments(mbi "" "PATH;DEPENDS" "" ${ARGV})
     require_arguments(mbi PATH)
@@ -20,6 +21,22 @@ function(make_msbuild_item JSON)
     set(${JSON} "${item_json}" PARENT_SCOPE)
 endfunction()
 
+# Run XAML compiler.
+#
+# Single-value arguments:
+# TARGET - Target to create for compilation (to eg trigger explicitly)
+# OUTPUT_PATH - Directory to write output files to
+# NAMESPACE - XAML namespace
+# PCH - Precompiled header
+# WINSDK_VERSION - Used SDK version
+# MERGED_WINMD_DIR - Directory with merged .winmd file, file must be named <NAMESPACE>.winmd
+# XBF_DIR_VAR - Optional, name of variable receiving directory with generated .xbf files
+# XBF_FILES_VAR - Optional, name of variable receiving list of generated .xbf files, relative to XBF_DIR_VAR
+# GENERATED_SOURCES - Optional, name of variable receiving generated source files. Should be included in compilation
+# Multi-value arguments:
+# REF_WINMD - List of reference .winmds (App SDK, Platform SDK .winmds)
+# XAML_APPS - List of application .xaml file(s)
+# XAML_PAGES - List of page .xaml file(s)
 function(compile_xaml)
     cmake_parse_arguments(compile_xaml "" "TARGET;OUTPUT_PATH;NAMESPACE;PCH;WINSDK_VERSION;MERGED_WINMD_DIR;XBF_DIR_VAR;XBF_FILES_VAR;GENERATED_SOURCES" "REF_WINMD;XAML_APPS;XAML_PAGES" ${ARGV})
     require_arguments(compile_xaml TARGET OUTPUT_PATH NAMESPACE PCH WINSDK_VERSION MERGED_WINMD_DIR)
