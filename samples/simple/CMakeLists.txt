@@ -14,7 +14,7 @@ set(ROOT_NAMESPACE "winui3_cmake_simple") # must match XAML class namespaces etc
 set(WINSDK_VERSION 10.0.17763.0)
 set(common_args
     WINSDK_VERSION ${WINSDK_VERSION}
-    NAMESPACE "winui3_cmake_simple"
+    NAMESPACE "${ROOT_NAMESPACE}"
     PCH "pch.h")
 
 generate_XamlMetaDataProvider(OUTDIR "${CMAKE_CURRENT_BINARY_DIR}/XamlMetaDataProvider"
