@@ -27,6 +27,7 @@ function(winmd_from_idl)
     find_platform_package_dir(PACKAGE windows.foundation.foundationcontract PATH_VAR metadata_native WINSDK_VERSION ${winmd_from_idl_WINSDK_VERSION})
     add_custom_command(OUTPUT "${winmd_from_idl_OUT}"
                        COMMAND ${MIDL} ARGS "${idl_native}" /nologo /winrt /winmd "${winmd_native}" /nomidl /metadata_dir "${metadata_native}" ${midl_args}
-                       MAIN_DEPENDENCY "${MIDL_IDL}"
+                       MAIN_DEPENDENCY "${idl_native}"
+                       DEPENDS "${idl_native}"
                        )
 endfunction()
