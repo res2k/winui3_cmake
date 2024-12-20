@@ -6,7 +6,7 @@ function(_maybe_link_into_binary result_path_var path)
     if(EXISTS "${path_dst}")
         file(REMOVE "${path_dst}")
     endif()
-    execute_process(COMMAND "${CMAKE_COMMAND}" -E create_hardlink "${path_abs}" "${path_rel}"
+    execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink "${path_abs}" "${path_rel}"
                     WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
                     RESULT_VARIABLE link_res)
     if(link_res EQUAL 0)
