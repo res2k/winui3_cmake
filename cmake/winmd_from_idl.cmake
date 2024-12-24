@@ -28,6 +28,6 @@ function(winmd_from_idl)
     add_custom_command(OUTPUT "${winmd_from_idl_OUT}"
                        COMMAND ${MIDL} ARGS "${idl_native}" /nologo /winrt /winmd "${winmd_native}" /nomidl /h "nul" /metadata_dir "${metadata_native}" ${midl_args}
                        MAIN_DEPENDENCY "${idl_native}"
-                       DEPENDS "${idl_native}"
+                       DEPENDS "${idl_native}" "${ref_path_native}"
                        )
 endfunction()
