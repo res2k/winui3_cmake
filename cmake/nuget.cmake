@@ -27,7 +27,7 @@ function(nuget_install)
     execute_process(COMMAND "${NUGET}" install "${nuget_PACKAGES_CONFIG}" -OutputDirectory "${nuget_PACKAGES_DIR}" -NonInteractive)
 
     # Extract package infos
-    set(nuget_package_regex "package id=\"(.*)\" version=\"([0-9\.]*)\"")
+    set(nuget_package_regex "package id=\"(.*)\" version=\"([0-9A-Za-z\.\-]*)\"")
     file(STRINGS "${nuget_PACKAGES_CONFIG}" NUGET_PACKAGES REGEX ${nuget_package_regex})
     foreach(package IN LISTS NUGET_PACKAGES)
         string(REGEX MATCH "${nuget_package_regex}" PACKAGE_MATCH "${package}")
